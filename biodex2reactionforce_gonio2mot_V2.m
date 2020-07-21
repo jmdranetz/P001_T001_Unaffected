@@ -87,8 +87,6 @@ endfor
 %calculating reaction force
 A=[0];
 l=.406;
-mg=22.24;
-fixA=[0 pi/6 pi/3 pi/2 pi*49/180];
 for i=1:8
   x=fdata.data(:,i*2); %data of a trial
   k=1;
@@ -105,11 +103,7 @@ for i=1:8
     b=b(1:length(B));
   endif
   Mb=6.0046.*b.^4+40.776.*b.^3+91.388.*b.^2-73.177.*b+9.5647; %finds moment about biodex arm
-  if i <= 5
-    Fr=Mb./l-mg.*sin((pi/2)-fixA(i))./2; %solves for reaction force isometric
-  else
-    Fr=Mb./l-mg.*sin((pi/2)-B(1:length(Mb),i))./2; %solves for reaction force
-  endif
+  Fr=Mb./l; %solves for reaction force
   if (size(A(:,1)) == 1) %recombines data into a matrix padded with NaN
     A = Fr;
   elseif (length(Fr) <  length(A(:,1)))
